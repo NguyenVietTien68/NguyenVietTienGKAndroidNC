@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +23,7 @@ import com.google.android.gms.tasks.Task;
 
 public class TrangChinh extends AppCompatActivity {
 
-    ImageView imgEmail;
+    ImageView imgEmail, imgAni;
     TextView tvTen;
     Button btnSignOut;
     GoogleSignInClient mGoogleSignInClient;
@@ -39,6 +41,10 @@ public class TrangChinh extends AppCompatActivity {
         imgEmail = findViewById(R.id.imgEmail);
         tvTen = findViewById(R.id.textView4);
         btnSignOut = findViewById(R.id.button);
+        imgAni = findViewById(R.id.imageView2);
+
+        Animation a = AnimationUtils.loadAnimation(this,R.anim.rotate);
+        imgAni.startAnimation(a);
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
