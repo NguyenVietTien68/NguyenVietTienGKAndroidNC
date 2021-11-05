@@ -3,9 +3,14 @@ package com.example.a33_18078881_nguyenviettien_dhktpm14ctt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -27,11 +32,12 @@ import com.google.android.gms.tasks.Task;
 
 public class TrangChinh extends AppCompatActivity {
 
+    private static final int NOTIFICATION = 1;
     ImageView imgEmail, imgAni;
     TextView tvTen, tvMess;
     Button btnSignOut;
     GoogleSignInClient mGoogleSignInClient;
-    Button create, read, update, delete;
+    Button create, read, update, delete, btnNo;
     private MyService mMyService;
     private Boolean isConnect = false;
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -70,6 +76,14 @@ public class TrangChinh extends AppCompatActivity {
         tvTen = findViewById(R.id.textView4);
         btnSignOut = findViewById(R.id.button);
         imgAni = findViewById(R.id.imageView2);
+        btnNo = findViewById(R.id.btnNo);
+
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                senNotification();
+            }
+        });
 
         Animation a = AnimationUtils.loadAnimation(this,R.anim.rotate);
         imgAni.startAnimation(a);
@@ -122,6 +136,21 @@ public class TrangChinh extends AppCompatActivity {
             Glide.with(this).load(String.valueOf(personPhoto)).into(imgEmail);
         }
     }
+
+    private void senNotification() {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+
+        Notification notification = new Notification.Builder(this)
+                .setContentTitle("Create, Read, Update, Delete")
+                .setContentText("Phần notification")
+                .setSmallIcon(R.drawable.common_full_open_on_phone)
+                .setLargeIcon(bitmap).build();
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if(notificationManager != null) {
+            notificationManager.notify(NOTIFICATION, notification);
+        }
+    }
+
     private void signOut() {
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
