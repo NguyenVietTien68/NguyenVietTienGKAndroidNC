@@ -45,8 +45,8 @@
         android:id="@+id/btnCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="388dp"
         android:text="Create"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -104,8 +104,8 @@
         android:id="@+id/tvMess"
         android:layout_width="98dp"
         android:layout_height="39dp"
-        android:layout_marginEnd="164dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginEnd="168dp"
+        android:layout_marginBottom="372dp"
         android:text="TextView"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -121,4 +121,17 @@
         android:text="Notification"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="251dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="164dp"
+        android:text="18078881_Nguyễn Việt Tiến"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
