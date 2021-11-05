@@ -3,8 +3,12 @@ package com.example.a33_18078881_nguyenviettien_dhktpm14ctt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -24,9 +28,25 @@ import com.google.android.gms.tasks.Task;
 public class TrangChinh extends AppCompatActivity {
 
     ImageView imgEmail, imgAni;
-    TextView tvTen;
+    TextView tvTen, tvMess;
     Button btnSignOut;
     GoogleSignInClient mGoogleSignInClient;
+    Button create, read, update, delete;
+    private MyService mMyService;
+    private Boolean isConnect = false;
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MyService.MyBinder binder = (MyService.MyBinder) service;
+            mMyService =binder.getService();
+            isConnect = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isConnect= false;
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +58,14 @@ public class TrangChinh extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+        Intent intent = new Intent(TrangChinh.this, MyService.class);
+        bindService(intent,mConnection,BIND_AUTO_CREATE);
+
+        create = findViewById(R.id.btnCreate);
+        read = findViewById(R.id.btnRead);
+        update = findViewById(R.id.btnUpdate);
+        delete = findViewById(R.id.btnDelete);
+        tvMess = findViewById(R.id.tvMess);
         imgEmail = findViewById(R.id.imgEmail);
         tvTen = findViewById(R.id.textView4);
         btnSignOut = findViewById(R.id.button);
@@ -53,6 +81,35 @@ public class TrangChinh extends AppCompatActivity {
                         signOut();
                         break;
                 }
+            }
+        });
+
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(TrangChinh.this, "Created", Toast.LENGTH_SHORT).show();
+                tvMess.setText(mMyService.create()+"");
+            }
+        });
+        read.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(TrangChinh.this, "Read", Toast.LENGTH_SHORT).show();
+                tvMess.setText(mMyService.read()+"");
+            }
+        });
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(TrangChinh.this, "Updated", Toast.LENGTH_SHORT).show();
+                tvMess.setText(mMyService.update()+"");
+            }
+        });
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(TrangChinh.this, "Deleted", Toast.LENGTH_SHORT).show();
+                tvMess.setText(mMyService.delete()+"");
             }
         });
 
